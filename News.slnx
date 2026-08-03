@@ -1,0 +1,21 @@
+<Solution>
+  <Folder Name="/Application/">
+    <Project Path="Application.Contrast/Application.Contrast.csproj" Id="67957636-a88a-4857-a1f6-6c45a821793e" />
+    <Project Path="Application.DTO/Application.DTO.csproj" Id="6c3b5c3d-59d5-4949-aa99-46d9a7d5730a" />
+    <Project Path="Application.FreamWork/Application.FreamWork.csproj" Id="a7d00496-5589-4bcf-919f-94aa57b32bbb" />
+    <Project Path="Application/Application.csproj" Id="1a6a0ff1-5e4c-499e-b714-be6603e39e70" />
+  </Folder>
+  <Folder Name="/BootStrap/">
+    <Project Path="News.BootStrap/News.BootStrap.csproj" />
+  </Folder>
+  <Folder Name="/Domain/">
+    <Project Path="Doamin.News/Domain.News.csproj" />
+    <Project Path="News.DomainServiceContract/News.DomainServiceContract.csproj" Id="73691ff6-b881-4450-a19a-d84b3af6c1f9" />
+    <Project Path="News.Freamwork/News.Freamwork.csproj" Id="8112f9fd-1cbb-4ef2-9be8-59b9c561fffa" />
+  </Folder>
+  <Folder Name="/Infrastructure/">
+    <Project Path="Infrastructure.News.Ef.Persistance/Infrastructure.News.Ef.Persistance.csproj" />
+    <Project Path="Infrastructure.Security.Idetity/Infrastructure.Security.Idetity.csproj" Id="e1d6d4ae-cd70-4dfa-8ddb-d4d257e831fe" />
+  </Folder>
+  <Project Path="News/News.csproj" />
+</Solution>

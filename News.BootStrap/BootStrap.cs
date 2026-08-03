@@ -1,0 +1,98 @@
+﻿using Application.Contrast.QueryService;
+using Application.Contrast.Repository;
+using Application.Contrast.Services;
+using Application.implementation;
+using Infrastructure.News.Ef.Persistance;
+using Infrastructure.News.Ef.Persistance.Query;
+using Infrastructure.News.Ef.Persistance.Repository;
+using Infrastructure.Security.Idetity;
+using Infrastructure.Security.Idetity.Models;
+using Infrastructure.Security.Idetity.Token;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using News.DomainServiceContract.Services;
+using System;
+using System.Collections.Generic;
+using System.Security.Claims;
+using System.Text;
+
+namespace News.BootStrap
+{
+    public static class BootStrap
+    {
+        public static void WierUpNewsSystem(this IServiceCollection services, string newsConectionString,
+            string securityConectionString,string secretKey)
+        {
+            services.AddDbContext<NewsContext>(optionsAction => optionsAction.UseSqlServer(newsConectionString));
+            services.AddDbContext<SecurityContext>(op => op.UseSqlServer(securityConectionString));
+
+            services.AddScoped<INewsRepository, NewsRepository>();
+            services.AddScoped<INewsQuery, NewsQuery>();
+            services.AddScoped<INewsApplication, NewsApplication>();
+            services.AddScoped<IGenerateToken, GenerateToken>();
+
+
+
+
+
+            services.AddIdentityCore<ApplicationUser>(optionAction =>
+            {
+                optionAction.Password.RequireDigit = false;
+                optionAction.Lockout.MaxFailedAccessAttempts = 10;
+                optionAction.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                optionAction.Password.RequiredLength = 8;
+                optionAction.Password.RequireUppercase = false;
+                optionAction.Password.RequireLowercase = true;
+                optionAction.Password.RequireNonAlphanumeric = false;
+            }).AddRoles<ApplicationRole>()
+            .AddEntityFrameworkStores<SecurityContext>()
+            .AddSignInManager()
+            .AddDefaultTokenProviders();
+
+
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(optionsAction =>
+    {
+        optionsAction.RequireHttpsMetadata = false;
+        optionsAction.SaveToken = true;
+        optionsAction.MapInboundClaims = false;
+        optionsAction.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(secretKey)),
+            ClockSkew = TimeSpan.FromMinutes(2),
+            NameClaimType = ClaimTypes.Name,
+            RoleClaimType = ClaimTypes.Role,
+        };
+        optionsAction.Events = new JwtBearerEvents
+        {
+            OnAuthenticationFailed = context =>
+            {
+                Console.WriteLine($"[JWT] Authentication failed: {context.Exception.Message}");
+                return Task.CompletedTask;
+            },
+            OnChallenge = context =>
+            {
+                Console.WriteLine($"[JWT] Challenge: {context.Error} - {context.ErrorDescription}");
+                return Task.CompletedTask;
+            },
+        };
+    });
+
+
+
+
+
+
+        }
+    }
+
+}
