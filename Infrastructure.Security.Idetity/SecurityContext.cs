@@ -5,11 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Infrastructure.Security.Idetity
+namespace Infrastructure.Security.Identity
 {
     public class SecurityContext:IdentityDbContext<ApplicationUser,ApplicationRole,int>
     {
-        public SecurityContext(DbContextOptions option):base(option)
+        public SecurityContext(DbContextOptions<SecurityContext> options) : base(options)
         {
             
         }
@@ -20,6 +20,8 @@ namespace Infrastructure.Security.Idetity
             builder.Entity<ApplicationUser>().Property(x => x.ProfileImageUrl).IsRequired(false).HasMaxLength(500);
             builder.Entity<ApplicationUser>().Property(x => x.Bio).IsRequired(false).HasMaxLength(5000);
             builder.Entity<ApplicationUser>().Property(x => x.RefreshToken).IsRequired(false).HasMaxLength(500);
+            builder.Entity<ApplicationUser>().Property(x => x.IsDeleted).IsRequired().HasDefaultValue(false);
+            
 
 
 

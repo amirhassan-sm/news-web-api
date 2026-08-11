@@ -13,7 +13,7 @@ using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Xml.Linq;
 
-namespace Infrastructure.Security.Idetity.Services
+namespace Infrastructure.Security.Identity.Services
 {
     public class AuthenticationService : IAuthenticationService
     {
@@ -42,6 +42,11 @@ namespace Infrastructure.Security.Idetity.Services
                         new List<string> { "invalid username or password" }, "Invalid_Credentials", HttpStatusCode.NotFound);
 
 
+                }
+                if (user.IsDeleted)
+                {
+                    return GenericOperationResult<TokenResult>.ToFail("failed to login",
+                         new List<string> { "this user is deleted" }, "User_Deleted", HttpStatusCode.NotFound);
                 }
                 var ValidatePassword = await userManager.CheckPasswordAsync(user, dto.Password);
                 if (!ValidatePassword)
@@ -97,6 +102,11 @@ namespace Infrastructure.Security.Idetity.Services
                     return GenericOperationResult<TokenResult>.ToFail("failed to refresh",
                       new List<string> { "invalid refreshtoken" }, "Invalid_refreshToken", HttpStatusCode.Unauthorized);
 
+                }
+                if (user.IsDeleted)
+                {
+                    return GenericOperationResult<TokenResult>.ToFail("failed to login",
+                         new List<string> { "this user is deleted" }, "User_Deleted", HttpStatusCode.NotFound);
                 }
                 if (user.RefreshTokenExpiration <= DateTime.UtcNow)
                 {
@@ -163,6 +173,7 @@ namespace Infrastructure.Security.Idetity.Services
             }
             catch (Exception ex) {
                 logger.LogError(ex, "failed to sign up {userName}", dto.UserName);
+             
 
                 return OperationResult.ToFail("failed to sign up", new List<string> {" an unexpected error occured"},"Exception_Occured",
                     HttpStatusCode.InternalServerError);

@@ -6,12 +6,15 @@ namespace Application.DTO.Security.UserManagement
 {
     public class UpdateUserDto
     {
-        public string UserId { get; set; }
+        public string UserId { get; set; } = string.Empty;
         public string UserName { get; set; }=string.Empty;
 
         public string FirstName{ get; set; }=string.Empty;
 
         public string LastName { get; set; } = string.Empty;
+
+        public string? Bio { get; set; } 
+      
 
         public string CurrentPassword { get; set; } = string.Empty;
         public string NewPassword { get; set; } = string.Empty;

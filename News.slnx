@@ -15,7 +15,10 @@
   </Folder>
   <Folder Name="/Infrastructure/">
     <Project Path="Infrastructure.News.Ef.Persistance/Infrastructure.News.Ef.Persistance.csproj" />
-    <Project Path="Infrastructure.Security.Idetity/Infrastructure.Security.Idetity.csproj" Id="e1d6d4ae-cd70-4dfa-8ddb-d4d257e831fe" />
+    <Project Path="Infrastructure.Security.Idetity/Infrastructure.Security.Identity.csproj" Id="e1d6d4ae-cd70-4dfa-8ddb-d4d257e831fe" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path=".gitignore" />
   </Folder>
   <Project Path="News/News.csproj" />
 </Solution>

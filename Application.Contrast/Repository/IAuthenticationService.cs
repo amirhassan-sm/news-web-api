@@ -11,7 +11,7 @@ namespace Application.Contrast.Repository
     {
         Task<GenericOperationResult<TokenResult>> Login(LoginDto dto);
 
-        Task<OperationResult> SignUp(SignUpDto dto, string UserRol);
+        Task<OperationResult> SignUp(SignUpDto dto, string UserRole);
 
         Task<GenericOperationResult<TokenResult>> Refresh(RereshTokenDto dto);
     }

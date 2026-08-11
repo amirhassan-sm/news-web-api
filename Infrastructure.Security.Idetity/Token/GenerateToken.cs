@@ -10,7 +10,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Infrastructure.Security.Idetity.Token
+namespace Infrastructure.Security.Identity.Token
 {
     public class GenerateToken : IGenerateToken
     {
@@ -25,6 +25,7 @@ namespace Infrastructure.Security.Idetity.Token
         public async Task<string> GenerateAcsessToken(int userId, string userName, string firstName, string lastName)
         {
             var claims = new List<Claim> {
+            new Claim("userId",userId.ToString()),
             new Claim(ClaimTypes.Name,userName),
             new Claim("lastName",lastName),
             new Claim("firstName",firstName),
@@ -43,7 +44,7 @@ namespace Infrastructure.Security.Idetity.Token
             }
 
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["[jwt:SecretKey]"]
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["jwt:SecretKey"]
                 ?? throw new InvalidOperationException("Jwt secret key is missing")));
             var credential = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             double expierAt = Convert.ToDouble(config["jwt:DurationInMinutes"]);

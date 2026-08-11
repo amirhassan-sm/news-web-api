@@ -10,5 +10,8 @@
     <ProjectReference Include="..\Application.DTO\Application.DTO.csproj" />
     <ProjectReference Include="..\Application.FreamWork\Application.FreamWork.csproj" />
   </ItemGroup>
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
 
 </Project>

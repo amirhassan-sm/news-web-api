@@ -1,4 +1,5 @@
 using News.OpenApi;
+using News.Security;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,6 +26,7 @@ builder.Services.AddSingleton<BearerSecuritySchemeTransformer>();
 
 
 var app = builder.Build();
+await IdentityDataSeeder.SeedAsync(app.Services);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

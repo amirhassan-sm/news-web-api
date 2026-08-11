@@ -21,9 +21,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Application.Contrast\Application.Contrast.csproj" />
     <ProjectReference Include="..\Application\Application.csproj" />
     <ProjectReference Include="..\Infrastructure.News.Ef.Persistance\Infrastructure.News.Ef.Persistance.csproj" />
-    <ProjectReference Include="..\Infrastructure.Security.Idetity\Infrastructure.Security.Idetity.csproj" />
+    <ProjectReference Include="..\Infrastructure.Security.Idetity\Infrastructure.Security.Identity.csproj" />
     <ProjectReference Include="..\News.DomainServiceContract\News.DomainServiceContract.csproj" />
   </ItemGroup>
 

@@ -5,9 +5,11 @@ using Application.implementation;
 using Infrastructure.News.Ef.Persistance;
 using Infrastructure.News.Ef.Persistance.Query;
 using Infrastructure.News.Ef.Persistance.Repository;
-using Infrastructure.Security.Idetity;
+using Infrastructure.Security.Identity;
+using Infrastructure.Security.Identity.FileStorage;
+using Infrastructure.Security.Identity.Services;
+using Infrastructure.Security.Identity.Token;
 using Infrastructure.Security.Idetity.Models;
-using Infrastructure.Security.Idetity.Token;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -33,6 +35,11 @@ namespace News.BootStrap
             services.AddScoped<INewsQuery, NewsQuery>();
             services.AddScoped<INewsApplication, NewsApplication>();
             services.AddScoped<IGenerateToken, GenerateToken>();
+            services.AddScoped<IUserSevices, UserServices>();
+            services.AddScoped<IRoleService, RoleServices>();
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<IUserProfileStorage, UserProfileStorage>();
+            services.AddScoped<IUserRoleServices, UserRoleServices>();
 
 
 

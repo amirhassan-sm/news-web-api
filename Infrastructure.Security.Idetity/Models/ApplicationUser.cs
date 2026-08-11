@@ -14,6 +14,7 @@ namespace Infrastructure.Security.Idetity.Models
         public string? Bio { get; set; }
 
         public string? RefreshToken { get; set; }
+        public bool IsDeleted { get; set; }
         public DateTime? RefreshTokenExpiration { get; set; }
 
         public DateTime? LastLoginAt { get; set; }

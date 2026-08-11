@@ -11,6 +11,8 @@ namespace Application.DTO.Security.UserManagement
         public string FirstName { get; set; }=string.Empty;
 
         public string  LastName { get; set; }=string.Empty;
+        public string ImageUrl { get; set; } = string.Empty;
+        public string Bio { get; set; } = string.Empty;
 
         public List<string> Roles { get; set; } =new();
 
