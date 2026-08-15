@@ -6,7 +6,13 @@ namespace Application.FreamWork.SearchBaseModel
 {
     public class PageModel
     {
-        public int pageIndex { get; set; } = 1;
+        private int _PageIndex = 1;
+
+        public int pageIndex
+        {
+            get => _PageIndex;
+            set => _PageIndex = value < 1 ? 1 : value;
+        }
 
         private int _pageSize { get; set; }
 

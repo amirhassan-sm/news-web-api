@@ -97,8 +97,13 @@ namespace Infrastructure.Security.Identity.Services
                         ,HttpStatusCode.NotFound);
                     
                 }
+                if (user.ProfileImageUrl !=null)
+                {
+                    await profileStorage.DeleteProfileAsync(user.ProfileImageUrl);  
+                    
+                }
 
-                var url = await profileStorage.SaveProfileAsync(model.ProfileImage.OpenReadStream(), model.ProfileImage.Name);
+                var url = await profileStorage.SaveProfileAsync(model.ProfileImage.OpenReadStream(), model.ProfileImage.FileName);
                 
                 user.ProfileImageUrl = url;
 
@@ -171,6 +176,7 @@ namespace Infrastructure.Security.Identity.Services
                     .Take(results.pageSize);
 
                 results.userProfiles = await listItem.ToListAsync();
+                results.RecordCount = await listItem.CountAsync();  
 
                 return GenericOperationResult<UserProfileComplexResult>
                     .ToSuccess("user list", results);
@@ -250,6 +256,11 @@ namespace Infrastructure.Security.Identity.Services
                     return OperationResult.ToFail(id, "failed to remove", new List<string> { "this user does not exist" },
                         "User_Not_Exist", HttpStatusCode.NotFound);
 
+                }
+                if(user.IsDeleted == true)
+                {
+                    return OperationResult.ToFail(id, "failed to remove", new List<string> { "this user already deleted" },
+                    "User_Already_Deleted", HttpStatusCode.BadRequest);
                 }
                 user.IsDeleted = true;
 

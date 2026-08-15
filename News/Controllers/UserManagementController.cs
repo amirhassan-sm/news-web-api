@@ -59,7 +59,7 @@ namespace News.Controllers
 
 
         }
-        [HttpDelete("RemoveUser")]
+        [HttpDelete("RemoveUser/{id}")]
         public async Task<IActionResult> RemoveUser(int id)
         {
             var result = await service.RemoveUser(id);
@@ -75,9 +75,11 @@ namespace News.Controllers
 
         [HttpPost("AddMyImageProfile")]
         [Authorize(Roles = $"{AppRoles.User},{AppRoles.Admin}")]
-        public async Task<IActionResult> AddMyImageProfile(UserImageDtoEntry model)
+        public async Task<IActionResult> AddMyImageProfile([FromForm]UserImageDtoEntry model)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            // JWT stores NameIdentifier as "sub" when MapInboundClaims = false
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)
+                ?? User.FindFirstValue("sub");
 
             if (!int.TryParse(userId, out var id))
             {

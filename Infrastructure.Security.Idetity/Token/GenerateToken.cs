@@ -25,7 +25,7 @@ namespace Infrastructure.Security.Identity.Token
         public async Task<string> GenerateAcsessToken(int userId, string userName, string firstName, string lastName)
         {
             var claims = new List<Claim> {
-            new Claim("userId",userId.ToString()),
+            new Claim(ClaimTypes.NameIdentifier,userId.ToString()),
             new Claim(ClaimTypes.Name,userName),
             new Claim("lastName",lastName),
             new Claim("firstName",firstName),

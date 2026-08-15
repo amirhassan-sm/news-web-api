@@ -1,4 +1,5 @@
 ﻿using Application.Contrast.QueryService;
+using Application.Contrast.QueryServices;
 using Application.Contrast.Repository;
 using Application.Contrast.Services;
 using Application.implementation;
@@ -26,7 +27,7 @@ namespace News.BootStrap
     public static class BootStrap
     {
         public static void WierUpNewsSystem(this IServiceCollection services, string newsConectionString,
-            string securityConectionString,string secretKey)
+            string securityConectionString,string secretKey , string Issuer ,  string audience)
         {
             services.AddDbContext<NewsContext>(optionsAction => optionsAction.UseSqlServer(newsConectionString));
             services.AddDbContext<SecurityContext>(op => op.UseSqlServer(securityConectionString));
@@ -40,6 +41,9 @@ namespace News.BootStrap
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IUserProfileStorage, UserProfileStorage>();
             services.AddScoped<IUserRoleServices, UserRoleServices>();
+            services.AddScoped<ICategoryNewsQueryService, CategoryNewsQueryService>();
+            services.AddScoped<INewsCategoryRepository, NewsCategoryRepository>();
+            services.AddScoped<ICategoryNewsApplication, CategoryNewsApplication>();
 
 
 
@@ -66,11 +70,13 @@ namespace News.BootStrap
     {
         optionsAction.RequireHttpsMetadata = false;
         optionsAction.SaveToken = true;
-        optionsAction.MapInboundClaims = false;
+        
         optionsAction.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
         {
             ValidateIssuer = true,
+            ValidIssuer = Issuer,
             ValidateAudience = true,
+            ValidAudience = audience ,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(

@@ -17,7 +17,7 @@ namespace Infrastructure.News.Ef.Persistance.Configuration
             builder.Property(x => x.Name).HasMaxLength(200).IsRequired(true);
 
 
-            builder.HasMany(x=>x.News).WithOne(x=>x.NewsCategory).HasForeignKey(x=>x.CategoryId);
+            builder.HasMany(x=>x.News).WithOne(x=>x.NewsCategory).HasForeignKey(x=>x.CategoryId).OnDelete(DeleteBehavior.Restrict);
 
 
         }

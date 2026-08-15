@@ -42,7 +42,7 @@ namespace Infrastructure.Security.Identity.FileStorage
                 Directory.CreateDirectory(folderPath);
             }
             var extention = Path.GetExtension(fileName);
-            var newFileName = $"{Guid.NewGuid()},{extention}";
+            var newFileName = $"{Guid.NewGuid()}{extention}";
 
             var fullPath = Path.Combine(folderPath, newFileName);
             using (var outPut = new FileStream(fullPath, FileMode.Create))

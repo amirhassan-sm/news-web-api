@@ -7,8 +7,10 @@ var builder = WebApplication.CreateBuilder(args);
 string NewsConnectionString = builder.Configuration.GetConnectionString("NewsSystem");
 string securityConnectionString = builder.Configuration.GetConnectionString("Security");
 string secretKey = builder.Configuration["jwt:SecretKey"];
+string issuer = builder.Configuration["jwt:Issuer"];
+string audience = builder.Configuration["jwt:Audience"];
 
-News.BootStrap.BootStrap.WierUpNewsSystem(builder.Services,NewsConnectionString,securityConnectionString,secretKey);
+News.BootStrap.BootStrap.WierUpNewsSystem(builder.Services,NewsConnectionString,securityConnectionString,secretKey,issuer,audience);
 
 
 
@@ -38,6 +40,7 @@ if (app.Environment.IsDevelopment())
 
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 app.UseAuthentication();
 
 app.UseAuthorization();
